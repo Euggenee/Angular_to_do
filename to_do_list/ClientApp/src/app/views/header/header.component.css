@@ -1,0 +1,34 @@
+.header-icon {
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.settings button{
+  margin-right: 0;
+}
+
+.wid{
+  width: 100%;
+}
+
+.prompt {
+  display: inline-block; 
+  position: relative; 
+ }
+
+ .prompt:hover::after {
+  content: attr(data-title); 
+  position: absolute; 
+  left: 20%; top: 30%; 
+  z-index: 1; 
+  background: rgba(255,255,230,0.9); 
+  font-family: Arial, sans-serif; 
+  font-size: 11px; 
+  padding: 5px 10px; 
+  border: 1px solid #333; 
+ }
+
+ .indent{
+   padding-top: 20px;
+ }
+

@@ -1,0 +1,24 @@
+<div class="sing-in-form">
+    <h4>Sing in</h4>
+    <form novalidate (ngSubmit)="onSignIn(singInForm)" #singInForm='ngForm'>
+        <div class="form-group">
+            <input type='email' autocomplete="off" name="email" required placeholder="Email" ngModel #email='ngModel'
+                class="form-control">
+            <div class="alert alert-danger" [hidden]="email.valid || email.pristine">Please enter your email</div>
+        </div>
+        <div class="form-group">
+            <input type="password" autocomplete="off" name="password" required placeholder="Password" ngModel
+                #password='ngModel' class="form-control">
+            <div class="alert alert-danger" [hidden]='password.valid || password.pristine'>Password is required</div>
+        </div>
+        <div class="alert alert-danger" *ngIf="formError">{{formError}}</div>
+        <div *ngIf=" !isAuthenticated && !invalidLogin && showButtons ">
+            <button routerLink='/register' class="btn button-success">Register</button>
+            <button [disabled]='singInForm.invalid' type="submit" class="btn btn-primary">Sing in</button>
+
+        </div>
+        <div *ngIf="submitting && !showButtons">
+            <span class="massege">Sing in...</span> <span><img src='../../../assets/30.gif'></span>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,22 @@
+<!--создание/редактирование категории-->
+<mat-dialog-content>
+  <p mat-dialog-title>{{dialogTitle}}</p>
+  <mat-form-field>
+    <mat-label>Название (20 символов)</mat-label>
+    <input #inputTitle [(ngModel)]="priorityTitle" matInput maxlength="20" />
+    <button class="clear-icon size25" mat-button mat-icon-button matSuffix>
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-form-field>
+</mat-dialog-content>
+
+<!--  кнопки возможных действий-->
+
+<mat-dialog-actions>
+  <div class="col-12 text-center">
+    <button (click)="onConfirm()" color="primary" mat-raised-button>
+      Сохранить
+    </button>
+    <button (click)="onCancel()" mat-raised-button>Отмена</button>
+  </div>
+</mat-dialog-actions>

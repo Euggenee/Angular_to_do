@@ -1,0 +1,30 @@
+:host{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.register-form{
+    min-width: 290px;
+    background-color: rgb(255, 255, 255);
+    border: 2px;
+    border-color: black;
+    /* opacity: 0.9; */
+    padding: 20px;
+    margin: 5px 10px;
+}
+
+h4{
+    text-align: center;
+}
+
+button.btn-primary{
+    float: right;
+}
+
+span>img{
+    margin-left: 5%;
+}
+
