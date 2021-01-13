@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\data\TestData.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="ClientApp\src\assets\img\" />
   </ItemGroup>
 
