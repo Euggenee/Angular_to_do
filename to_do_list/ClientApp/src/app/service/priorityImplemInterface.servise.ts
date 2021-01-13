@@ -1,8 +1,8 @@
 import { Priority } from '../model/priority';
-import { PriorityInterfase } from '../data/dao/interface/priorityInterface';
 import { Observable, of } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { OnInit, Injectable } from '@angular/core';
+import { PriorityInterfase } from '../interface/priorityInterface';
 
 
 @Injectable({

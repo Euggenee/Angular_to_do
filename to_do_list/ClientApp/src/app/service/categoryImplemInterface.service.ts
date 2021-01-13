@@ -1,9 +1,9 @@
 //import { TestBed } from '@angular/core/testing';
 import { Category } from 'src/app/model/category';
-import { CategoryInterfase } from '../data/dao/interface/categoryInterface';
 import { Observable, of } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { Injectable, OnInit } from '@angular/core';
+import { CategoryInterfase } from '../interface/categoryInterface';
 
 
 @Injectable({

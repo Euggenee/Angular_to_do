@@ -1,10 +1,10 @@
 
-import { Category } from './../../../model/category';
 import { CommonInterface } from "./commonInterface";
 import { Task } from "src/app/model/task";
 import { Observable } from "rxjs";
 import { Priority } from 'src/app/model/priority';
 import { OnInit } from '@angular/core';
+import { Category } from "../model/category";
 
 
 export interface TaskInterfase extends CommonInterface<Task> {

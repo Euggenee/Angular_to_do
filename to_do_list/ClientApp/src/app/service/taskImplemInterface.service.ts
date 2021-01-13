@@ -1,10 +1,10 @@
 import { DataService } from "./data.service";
-import { TaskInterfase } from '../data/dao/interface/taskInterface';
 import { Task } from 'src/app/model/Task';
 import { Category } from 'src/app/model/category';
 import { Priority } from 'src/app/model/priority';
 import { Observable, of } from 'rxjs';
 import { Injectable } from "@angular/core";
+import { TaskInterfase } from "../interface/taskInterface";
 
 
 @Injectable({
