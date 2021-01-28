@@ -29,7 +29,7 @@ namespace to_do_list.Controllers
         {
             bool password = await db.Users.Select(p => p.Password).ContainsAsync(user.Password);
             bool email = await db.Users.Select(e =>e.Email).ContainsAsync(user.Email);
-            User userData = await db.Users.Select(s =>new User { Id = s.Id, Email = s.Email }).FirstOrDefaultAsync(email => email.Email == user.Email);
+            User userData = await db.Users.Select(s =>new User(s.Id, s.Email){ Id = s.Id, Email = s.Email }).FirstOrDefaultAsync(email => email.Email == user.Email);
            
             if (user == null)
                 return BadRequest("Invalid client reques");

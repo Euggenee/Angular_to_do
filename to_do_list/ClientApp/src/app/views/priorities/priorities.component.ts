@@ -50,15 +50,15 @@ export class PrioritiesComponent implements OnInit {
     })
   }
 
-  /*  private openAddPriorityDialog() {
-      const dialogRef = this.dialog.open(EditPriorityDialogComponent, { data: [" ", 'Добвление приоритета', OperType.ADD], width: '400px' })
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          const newPriority = new Priority(null, result as string, PrioritiesComponent.defaultColor);
-          this.addPriority.emit(newPriority);
-        }
-      })
-    }*/
+  private openAddPriorityDialog() {
+    const dialogRef = this.dialog.open(EditPriorityDialogComponent, { data: [" ", 'Добвление приоритета', OperType.ADD], width: '400px' })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const newPriority = new Priority(null, result as string, PrioritiesComponent.defaultColor);
+        this.addPriority.emit(newPriority);
+      }
+    })
+  }
 
   private delete(priority: Priority) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, { data: { dialogTitle: 'Подтвердите действие', messeage: 'Вы действительно хотите удалить' }, autoFocus: false })

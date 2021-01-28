@@ -27,8 +27,8 @@ namespace to_do_list.Controllers
 
         public async Task<ActionResult<IList<User>>> Get()
         {
-            var users = db.Users.Select(u => 
-            new User { Email = u.Email, Name = u.Name, Id = u.Id, Tasks = u.Tasks })
+            var users = db.Users.Select(u =>
+            new User { Id = u.Id, Name = u.Name, Email = u.Email, Tasks = u.Tasks })
                 .ToListAsync();
 
             return await users;
@@ -38,15 +38,17 @@ namespace to_do_list.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
-            User user = await db.Users.Select(u => new User
+             var user = await db.Users.Select(u => new 
             {
                 Id = u.Id,
                 Name = u.Name,
                 Email = u.Email,
-                Tasks = u.Tasks.Select(t => new Models.Task
+                Tasks = u.Tasks.Select(t => new  
                 {
                     Id = t.Id,
                     Title = t.Title,
+                    Complited = t.Complited,
+                    Date= t.Date,
                     Priority = t.Priority,
                     Category = t.Category
                 }).ToList()
@@ -54,7 +56,7 @@ namespace to_do_list.Controllers
 
             if (user == null)
                 return NotFound();
-           
+
             return new ObjectResult(user);
         }
 

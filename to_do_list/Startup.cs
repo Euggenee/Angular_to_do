@@ -14,7 +14,7 @@ namespace to_do_list
 {
     public class Startup
     {
-        
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,13 +25,13 @@ namespace to_do_list
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string con = "Server=(localdb)\\mssqllocaldb;Database=usersdbstore;Trusted_Connection=True;";
+            string con = "Server=(localdb)\\mssqllocaldb;Database=usersdbtodolist;Trusted_Connection=True;";
 
             // Set the data context
             services.AddDbContext<UserContext>(options => options.UseSqlServer(con));
 
             // CORS setup (receive requests between sources with cross origin)
-            services.AddCors(options =>                      
+            services.AddCors(options =>
             {
                 options.AddPolicy("EnabelCORS", builder =>
                 {
@@ -102,10 +102,10 @@ namespace to_do_list
 
             app.UseSpa(spa =>
             {
-                  // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                  // see https://go.microsoft.com/fwlink/?linkid=864501
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                  spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {

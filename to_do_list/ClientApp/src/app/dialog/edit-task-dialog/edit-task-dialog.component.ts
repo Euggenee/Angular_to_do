@@ -1,7 +1,6 @@
 import { Priority } from './../../model/priority';
 import { Component, OnInit, Inject } from '@angular/core';
-// import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { Task } from 'src/app/model/task';
+import { Task } from "src/app/model/Task";
 import { DataHandlerService } from 'src/app/service/data-handler.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';

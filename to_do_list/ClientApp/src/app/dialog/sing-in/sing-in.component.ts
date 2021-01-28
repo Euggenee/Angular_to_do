@@ -42,9 +42,7 @@ export class SingInComponent implements OnInit {
         this.invalidLogin = true;
         this.isAuthenticated = true;
         this.dataService.updateUserData();
-
       }, (error) => {
-        console.log(error)
         this.formError = "Неверный Email или Password";
         this.isAuthenticated = false;
         this.invalidLogin = false

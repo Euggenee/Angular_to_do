@@ -48,7 +48,6 @@ export class RegisterComponent implements OnInit {
       },
         (error) => {
           if (error.status === 409) {
-            console.log(error.status)
             this.submitting = false;
             this.formError = "User with this Email already exsist";
             this.emailError = true;

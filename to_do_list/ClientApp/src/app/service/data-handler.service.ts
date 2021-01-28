@@ -1,5 +1,5 @@
 import { Category } from 'src/app/model/category';
-import { Task } from 'src/app/model/task';
+import { Task } from "src/app/model/Task";
 import { DataService } from "./data.service";
 import { CategoryImplemInterfaceService } from './categoryImplemInterface.service';
 import { TaskImplemInterfaseService } from './taskImplemInterface.service';
@@ -14,6 +14,8 @@ import { PriorityImplemInterfaceService } from './priorityImplemInterface.servis
 
 // This service generalizes the logic implemented in services (PriorityImplemInterfaceService, CategoryImplemInterfaceService, TaskImplemInterfaseService)
 export class DataHandlerService {
+
+  private category: Category
 
   constructor(
     private priorityImplemInterfase: PriorityImplemInterfaceService,
@@ -58,10 +60,11 @@ export class DataHandlerService {
     return this.categoryImplemInterfase.delete(id);
   }
 
-  /*  addCategory(title: string): Observable<Category> {
-      return this.categoryImplemInterfase.add(new Category(null, title));
-    }*/
-
+  addCategory(title: string): Observable<Category> {
+    const userId = parseInt(localStorage.getItem("userId"))
+    this.category = new Category(title, userId)
+    return this.categoryImplemInterfase.add(this.category);
+  }
 
   getAllCategoryes(): Observable<Category[]> {
     return this.categoryImplemInterfase.getAll();
@@ -90,6 +93,7 @@ export class DataHandlerService {
     return this.taskImplemInterfase.getUncomplitedCountInCategory(null);
   }
 
+
   //A priority
 
   addPriority(priority: Priority): Observable<Priority> {
@@ -104,9 +108,3 @@ export class DataHandlerService {
     return this.priorityImplemInterfase.update(priority);
   }
 }
-  //Указываем елемент Task[] который будем прослушивать методом Subject<Task[]>()
-  //taskSubject = new Subject<Task[]>();  // элемент RxJs
-  /////
-  // taskSubject = new BehaviorSubject<Task[]>(TestData.tasks); // инициализирует значениями  TestData.tasks
-  // сategoriesSubject = new BehaviorSubject<Category[]>(TestData.categories);
-  ////

@@ -3,7 +3,7 @@
 
 namespace to_do_list.Models
 {
-    public class UserContext: DbContext
+    public class UserContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Task> Tasks { get; set; }
@@ -12,7 +12,7 @@ namespace to_do_list.Models
         public UserContext(DbContextOptions<UserContext> options) : base(options)
 
         {
-          // Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
     }

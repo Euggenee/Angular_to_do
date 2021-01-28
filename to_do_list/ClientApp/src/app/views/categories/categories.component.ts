@@ -1,26 +1,30 @@
 import { Category } from 'src/app/model/category';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { DataHandlerService } from '../../service/data-handler.service';
 import { MatDialog } from '@angular/material';
 import { EditCategoryDialogComponent } from 'src/app/dialog/edit-category-dialog/edit-category-dialog.component';
 import { OperType } from 'src/app/dialog/OperType';
 
+
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  styleUrls: ['./categories.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class CategoriesComponent implements OnInit {
 
   @Input()
-  public categories: Category[];
+  categories
+  private inCategories: Category[];
 
   @Output()
   selectCategory = new EventEmitter<Category>();
 
   @Input()
   selectedCategory: Category;
+  private sc: Category;
 
   @Output()
   deleteCategory = new EventEmitter<Category>();
@@ -36,22 +40,25 @@ export class CategoriesComponent implements OnInit {
 
   indexMouseMove: number;
 
+
   private searchCategoryTitle: string;
 
-  constructor(private dataHandler: DataHandlerService, private dialog: MatDialog) { }
+  constructor(private dataHandler: DataHandlerService, private dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef) { }
 
-  ngOnInit() {
-    /*this.categories = this.dataHandler.getCategories();*/
-    this.dataHandler.getAllCategoryes().subscribe(categories => this.categories = categories)
+  ngOnChanges(): void {
+    this.inCategories = this.categories
   }
 
-  /*showTasksByCategory(category) {
-    this.dataHandler.getTasksByCategory(category);
-  }*/
+  ngOnInit() { }
+
+  ngDoCheck(): void {
+    if (this.inCategories != this.categories) {
+      this.inCategories = this.categories;
+      this.changeDetectorRef.markForCheck()
+    }
+  }
 
   public showTasksByCategory(category: Category) {
-    /* this.selectedCategory = category;
-    this.dataHandler.fillTasksByCategory(category); */
     if (this.selectedCategory === category) {
       return
     }

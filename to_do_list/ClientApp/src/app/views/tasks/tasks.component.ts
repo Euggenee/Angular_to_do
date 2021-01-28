@@ -3,7 +3,7 @@ import { ConfirmDialogComponent } from './../../dialog/confirm-dialog/confirm-di
 import { EditTaskDialogComponent } from './../../dialog/edit-task-dialog/edit-task-dialog.component';
 import { AfterViewInit, Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { DataHandlerService } from "../../service/data-handler.service";
-import { Task } from 'src/app/model/Task';
+import { Task } from "src/app/model/Task";
 import { MatTableDataSource } from "@angular/material";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -79,7 +79,7 @@ export class TasksComponent implements OnInit {
 
   ngOnInit() {
 
-    /* this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);*/
+    this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
 
     // Datasource must be created for the table, any source (database, arrays, JSON, etc.) is assigned to it
     this.dataSource = new MatTableDataSource();
@@ -140,9 +140,7 @@ export class TasksComponent implements OnInit {
     this.dataSource.paginator = this.paginator;     // Update the paging component (number of records, pages)
   }
 
-
   private openEditTaskDialog(task: Task): void {    // Dialog edit to add a task
-
     // Open a dialog box
     const dialogRef = this.dialog.open(EditTaskDialogComponent, {
       data: [task, 'Редактирование задачи', OperType.EDIT],
@@ -223,20 +221,20 @@ export class TasksComponent implements OnInit {
       this.filterByPriority.emit(this.selectedPriorityFilter);
     }
   }
-  /*
-    // dialog box for adding a task
-    private openAddTaskDialog() { 
+
+  // dialog box for adding a task
+  private openAddTaskDialog() {
     // same as editing, but passing in an empty Task object
-      const task = new Task(null, '', false, null, this.selectedCategory);
-      const dialogRef = this.dialog.open(EditTaskDialogComponent, { data: [task, 'Добавление задачи', OperType.ADD] });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {                                // if you clicked OK and there is a result
-          this.addTask.emit(task);
-        }
-      });
-  
-    }
-    */
+    const task = new Task(null, '', false, null, this.selectedCategory);
+    const dialogRef = this.dialog.open(EditTaskDialogComponent, { data: [task, 'Добавление задачи', OperType.ADD] });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {                                // if you clicked OK and there is a result
+        this.addTask.emit(task);
+      }
+    });
+
+  }
+
 }
 
 

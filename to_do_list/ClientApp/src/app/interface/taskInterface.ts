@@ -1,6 +1,6 @@
 
 import { CommonInterface } from "./commonInterface";
-import { Task } from "src/app/model/task";
+import { Task } from "src/app/model/Task";
 import { Observable } from "rxjs";
 import { Priority } from 'src/app/model/priority';
 import { OnInit } from '@angular/core';

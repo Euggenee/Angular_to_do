@@ -1,5 +1,5 @@
 import { DataService } from "./data.service";
-import { Task } from 'src/app/model/Task';
+import { Task } from "src/app/model/Task";
 import { Category } from 'src/app/model/category';
 import { Priority } from 'src/app/model/priority';
 import { Observable, of } from 'rxjs';
@@ -101,7 +101,6 @@ export class TaskImplemInterfaseService implements TaskInterfase {
   }
 
   getAll(): Observable<Task[]> {
-    console.log(this.dataService.tasks)
     return of(this.dataService.tasks);
   }
 }

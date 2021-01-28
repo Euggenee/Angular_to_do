@@ -1,25 +1,26 @@
-import { Component, OnInit, ChangeDetectorRef, Input } from "@angular/core";
-import { Task } from "src/app/model/task";
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from "@angular/core";
+import { Task } from "src/app/model/Task";
 import { Category } from "src/app/model/category";
 import { Priority } from "src/app/model/priority";
 import { DataHandlerService } from "src/app/service/data-handler.service";
 import { zip } from 'rxjs';
-// import { threadId } from "worker_threads";
-import { FormBuilder } from '@angular/forms';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { DataService } from "src/app/service/data.service";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styles: []
+  styles: [],
+  changeDetection: ChangeDetectionStrategy.Default
+  //Fix it pass data by changing the link and using the immutable js library, use ChangeDetectionStrategy.onPush
 })
 
 export class HomeComponent implements OnInit {
 
   private title = 'Todo';
   private tasks: Task[];
-  private categories: Category[]; // All categories
-  private priorities: Priority[]; // All priorities
+  private categories: Array<Category> = new Array // All categories
+  private priorities: Array<Priority> = new Array // All priorities
 
   // Statistics
   private totalTasksCountInCategory: number;
@@ -41,7 +42,9 @@ export class HomeComponent implements OnInit {
   constructor(
     private dataHandler: DataHandlerService, // Facade for working with data
     private jwthelper: JwtHelperService,
-    private changeDetection: ChangeDetectorRef) {
+    private dataService: DataService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
   }
 
   isUserAuthenticated() {
@@ -56,7 +59,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
-    this.dataHandler.getAllCategoryes().subscribe(categories => this.categories = categories);
+    this.dataHandler.getAllCategoryes().subscribe((categories) => { this.categories = categories; });
     this.onSelectCategory(null); // Show all tasks
   }
 
@@ -127,11 +130,11 @@ export class HomeComponent implements OnInit {
       this.updateTasksAndStat();
     });
   }
-  /*
-    private onAddCategory(title: string) {
-      this.dataHandler.addCategory(title).subscribe(() => this.updateCategories());
-    }
-  */
+
+  private onAddCategory(title: string) {
+    this.dataHandler.addCategory(title).subscribe(() => this.updateCategories());
+  }
+
   private updateCategories() {
     this.dataHandler.getAllCategoryes().subscribe(categories => this.categories = categories)
   }

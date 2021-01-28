@@ -41,11 +41,11 @@
         <!--delimiter-->
 
         <div class="line"></div>
-        <div *ngIf="categories.length === 0">
+        <div *ngIf="inCategories.length === 0">
           <p class="not-found">Ничего не найдено</p>
         </div>
         <li (click)="showTasksByCategory(category)" (mouseenter)="showEditIcon(index)"
-          *ngFor="let category of categories; let index = index " (mouseleave)="showEditIcon(null)"
+          *ngFor="let category of inCategories; let index = index " (mouseleave)="showEditIcon(null)"
           [class.active]="category === selectedCategory" class="nav-item pointer">
           <a class="nav-link">
 

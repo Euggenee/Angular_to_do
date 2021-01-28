@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { Injectable, OnInit } from '@angular/core';
 import { CategoryInterfase } from '../interface/categoryInterface';
+import { HttpService } from './http-service.service';
 
 
 @Injectable({
@@ -11,9 +12,7 @@ import { CategoryInterfase } from '../interface/categoryInterface';
 })
 export class CategoryImplemInterfaceService implements CategoryInterfase {
 
-  constructor(private dataService: DataService) { }
-
-
+  constructor(private dataService: DataService, private httpService: HttpService) { }
 
   search(title: string): Observable<Category[]> {
     return of(this.dataService.categories.filter(
@@ -22,14 +21,13 @@ export class CategoryImplemInterfaceService implements CategoryInterfase {
   }
 
   add(category: Category): Observable<Category> {
-    if (category.id === null || category.id === 0) {
-      category.id = this.getLastIdCategory();
-    }
-    this.dataService.categories.push(category);
-    return of(category);
+    this.httpService.postAddCategory(category).subscribe((category) => {
+      this.dataService.updateDataServiceCategories();
+    });
+    return of(category)
   }
 
-  private getLastIdCategory(): number {
+  getLastIdCategory(): number {
     return Math.max.apply(Math, this.dataService.categories.map(c => c.id)) + 1;
   }
 
@@ -48,19 +46,13 @@ export class CategoryImplemInterfaceService implements CategoryInterfase {
     return of(tmpCategory);
   }
 
-
   update(category: Category): Observable<Category> {
     const tmpCategory = this.dataService.categories.find(t => t.id === category.id);
     this.dataService.categories.splice(this.dataService.categories.indexOf(tmpCategory), 1, category);
     return of(tmpCategory);
   }
 
-
   getAll(): Observable<Category[]> {
-
-    return of(this.dataService.categories);
+    return this.dataService.categories$
   }
-
-
-
 }
