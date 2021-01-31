@@ -60,7 +60,7 @@ namespace to_do_list.Controllers
         }
 
 
-        // POST api/task
+        // POST api/task/add
         [HttpPost, Route("add")]
         public async Task<ActionResult<Models.Task>> Post(Models.Task task)
         {
@@ -88,6 +88,38 @@ namespace to_do_list.Controllers
             }
             await db.SaveChangesAsync();
             return Ok();
+        }
+
+        // PUT api/task/change
+        [HttpPut, Route("change")]
+        public async Task<ActionResult<User>> Put(Models.Task task)
+        {
+            var tempTask = new Models.Task
+            {
+                Id = task.Id,
+                Title = task.Title,
+                Complited = task.Complited,
+                PriorityId = (from Priority in db.Priorities
+                              where Priority.Id == task.Priority.Id
+                              select Priority.Id).First(),
+                CategoryId = (from Category in db.Categories
+                              where Category.Id == task.Category.Id
+                              select Category.Id).First(),
+                Date = task.Date,
+                UserId = task.UserId
+            };
+
+            if (task == null)
+            {
+                return BadRequest();
+            }
+            else 
+            {
+                db.Update(tempTask);
+            }
+
+            await db.SaveChangesAsync();
+            return Ok(tempTask);
         }
     }
 }

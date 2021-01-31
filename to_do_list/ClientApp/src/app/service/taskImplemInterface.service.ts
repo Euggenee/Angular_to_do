@@ -93,8 +93,10 @@ export class TaskImplemInterfaseService implements TaskInterfase {
   }
 
   update(task: Task): Observable<Task> {
-    const taskTmp = this.dataService.tasks.find(t => t.id === task.id);
-    this.dataService.tasks.splice(this.dataService.tasks.indexOf(taskTmp), 1, task);
+    const userId = parseInt(localStorage.getItem("userId"))
+    this.httpServise.putUpdateTask(task, userId).subscribe(() => {
+      this.dataService.updateDataServiceTasks();
+    })
     return of(task);
   }
 

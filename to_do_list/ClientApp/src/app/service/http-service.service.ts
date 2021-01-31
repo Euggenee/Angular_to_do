@@ -54,6 +54,22 @@ export class HttpService {
       );
   }
 
+  //Update task
+  putUpdateTask(task: Task, userId: number) {
+    const body = {
+      id: task.id,
+      title: task.title,
+      complited: task.complited,
+      category: task.category,
+      priority: task.priority,
+      date: task.date,
+      userId
+    }
+    return this.http.put(this.instans + "/task/change", body, { observe: "response" })
+  }
+
+
+  // Add new task
   postNewTask(task: Task, complited: boolean, userId: number) {
     const body = {
       title: task.title,

@@ -1,7 +1,7 @@
 import { Category } from 'src/app/model/category';
 import { ConfirmDialogComponent } from './../../dialog/confirm-dialog/confirm-dialog.component';
 import { EditTaskDialogComponent } from './../../dialog/edit-task-dialog/edit-task-dialog.component';
-import { AfterViewInit, Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { DataHandlerService } from "../../service/data-handler.service";
 import { Task } from "src/app/model/Task";
 import { MatTableDataSource } from "@angular/material";
@@ -14,7 +14,8 @@ import { OperType } from 'src/app/dialog/OperType';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
-  styleUrls: ['./tasks.component.css']
+  styleUrls: ['./tasks.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TasksComponent implements OnInit {
 
@@ -147,12 +148,9 @@ export class TasksComponent implements OnInit {
       data: [task, 'Редактирование задачи', OperType.EDIT],
       autoFocus: false
     });
-
     dialogRef.afterClosed().subscribe(result => {
-
       // Process the results  
       if (result === 'complete') {
-
         task.complited = true;              // Set the status of the task as completed   
         this.updateTask.emit(task);
       }
@@ -168,7 +166,7 @@ export class TasksComponent implements OnInit {
         return;
       }
 
-      if (result as Task) {                   // If you clicked OK and there is a result
+      if (result as Task) {                          // If you clicked OK and there is a result
         this.updateTask.emit(task);
         return;
       }
