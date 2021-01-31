@@ -70,6 +70,7 @@ export class TasksComponent implements OnInit {
   private displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'operations', 'select'];
   private priorities: Priority[]; // Priority list (for filtering tasks)
   private tasks: Task[];
+  private task: Task;
 
   constructor(
     private dataHandler: DataHandlerService, // Data access
@@ -79,7 +80,7 @@ export class TasksComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
+    //this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
 
     // Datasource must be created for the table, any source (database, arrays, JSON, etc.) is assigned to it
     this.dataSource = new MatTableDataSource();
@@ -91,7 +92,7 @@ export class TasksComponent implements OnInit {
   private getPriorityColor(task: Task): string {
 
     // Color of the completed task
-    if (task.completed) {
+    if (task.complited) {
       return '#F8F9FA';                       // TODO convert colors to constants (magic strings, magic numbers)
     }
     if (task.priority && task.priority.color) {
@@ -152,12 +153,12 @@ export class TasksComponent implements OnInit {
       // Process the results  
       if (result === 'complete') {
 
-        task.completed = true;              // Set the status of the task as completed   
+        task.complited = true;              // Set the status of the task as completed   
         this.updateTask.emit(task);
       }
 
       if (result === 'activate') {
-        task.completed = false;             // return the task status as incomplete
+        task.complited = false;             // return the task status as incomplete
         this.updateTask.emit(task);
         return;
       }
@@ -194,7 +195,7 @@ export class TasksComponent implements OnInit {
   }
 
   private onToggleStatus(task: Task) {
-    task.completed = !task.completed;
+    task.complited = !task.complited;
     this.updateTask.emit(task);
   }
 
@@ -225,11 +226,12 @@ export class TasksComponent implements OnInit {
   // dialog box for adding a task
   private openAddTaskDialog() {
     // same as editing, but passing in an empty Task object
-    const task = new Task(null, '', false, null, this.selectedCategory);
-    const dialogRef = this.dialog.open(EditTaskDialogComponent, { data: [task, 'Добавление задачи', OperType.ADD] });
+    this.task = new Task('', false, null, null, null, null);
+    const dialogRef = this.dialog.open(EditTaskDialogComponent, { data: [this.task, 'Добавление задачи', OperType.ADD] });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {                                // if you clicked OK and there is a result
-        this.addTask.emit(task);
+      if (result) {
+        // if you clicked OK and there is a result
+        this.addTask.emit(this.task);
       }
     });
 

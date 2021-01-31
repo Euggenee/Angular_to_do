@@ -20,7 +20,7 @@
 }
 
 .mat-header-cell{
-  font-size: 1.063rem;
+  font-size: 1rem;
   color: #9c27b0 !important;
   font-weight:normal;
 }
@@ -63,4 +63,8 @@
 
 .col-date {
   width: 10% !important;
+}
+
+.size {
+  font-size: 5px !important;
 }

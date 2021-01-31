@@ -27,9 +27,9 @@ export class CategoryImplemInterfaceService implements CategoryInterfase {
     return of(category)
   }
 
-  getLastIdCategory(): number {
-    return Math.max.apply(Math, this.dataService.categories.map(c => c.id)) + 1;
-  }
+  // getLastIdCategory(): number {
+  //   return Math.max.apply(Math, this.dataService.categories.map(c => c.id)) + 1;
+  // }
 
   get(id: number): Observable<Category> {
     throw new Error("Method not implemented.");

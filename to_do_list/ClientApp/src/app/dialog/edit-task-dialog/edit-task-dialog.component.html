@@ -3,8 +3,9 @@
   <mat-form-field appearance="fill">
     <mat-label> название</mat-label>
     <input #inputTitle matInput [(ngModel)]="tmpTitle" (keydown.enter)="onConfirm()">
-    <button *ngIf="tmpTitle.trim().length > 0" mat-button matSuffix mat-icon-button aria-label="clear"
-      (click)="tmpTitle=''" class="size25">
+    <button *ngIf="tmpTitle" mat-button matSuffix mat-icon-button aria-label="clear" (click)="tmpTitle=''"
+      class="size-button">
+      <!-- <button *ngIf="tmpTitle.trim().length > 0" mat-button matSuffix mat-icon-button aria-label="clear"(click)="tmpTitle=''" class="size-button"> -->
       <mat-icon>clear</mat-icon>
     </button>
   </mat-form-field>
@@ -34,7 +35,7 @@
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
   <button *ngIf="inputDate.value.trim().length > 0" mat-button matSuffix mat-icon-button aria-label="clear"
-    (click)="tmpDate = null" class="size25">
+    (click)="tmpDate = null" class="size">
     <mat-icon>clear</mat-icon>
   </button>
 </mat-form-field>
@@ -44,8 +45,8 @@
     [disabled]="inputTitle.value.trim().length==0">Сохранить </button>
   <button mat-button mat-raised-button (click)="onCancel()">Отмена</button>
   <button mat-button mat-raised-button class="red" (click)="delete()">Удалить з</button>
-  <button mat-button mat-raised-button class="green" *ngIf="!task.completed && canActivateDesactivate()"
+  <button mat-button mat-raised-button class="green" *ngIf="!task.complited && canActivateDesactivate()"
     (click)="complete()">Завершитьзадачу</button>
-  <button mat-button mat-raised-button class="green" *ngIf="task.completed && canActivateDesactivate()"
+  <button mat-button mat-raised-button class="green" *ngIf="task.complited && canActivateDesactivate()"
     (click)="activate()">Активировать</button>
 </mat-dialog-actions>

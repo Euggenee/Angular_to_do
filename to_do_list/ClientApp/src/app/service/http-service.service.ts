@@ -4,6 +4,7 @@ import { User } from '../model/user';
 import { map, find, filter } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Category } from '../model/category';
+import { Task } from '../model/Task';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,7 @@ export class HttpService {
       .pipe(
         map((response) => {
           const categories = response.body;
-          return { categories }
+          return categories
         })
       );
   }
@@ -48,9 +49,21 @@ export class HttpService {
       .pipe(
         map((response) => {
           const tasks = response.body;
-          return { tasks }
+          return tasks
         })
       );
+  }
+
+  postNewTask(task: Task, complited: boolean, userId: number) {
+    const body = {
+      title: task.title,
+      complited: complited,
+      priority: task.priority,
+      category: task.category,
+      date: task.date,
+      userId: userId
+    }
+    return this.http.post(this.instans + "/task/add", body, { observe: 'response' })
   }
 
   //Getting user Priorities

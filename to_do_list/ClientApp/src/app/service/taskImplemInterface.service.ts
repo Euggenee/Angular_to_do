@@ -5,6 +5,7 @@ import { Priority } from 'src/app/model/priority';
 import { Observable, of } from 'rxjs';
 import { Injectable } from "@angular/core";
 import { TaskInterfase } from "../interface/taskInterface";
+import { HttpService } from "./http-service.service";
 
 
 @Injectable({
@@ -14,7 +15,7 @@ import { TaskInterfase } from "../interface/taskInterface";
 export class TaskImplemInterfaseService implements TaskInterfase {
 
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private httpServise: HttpService) { }
 
   search(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
     return of(this.searchTasks(category, searchText, status, priority));
@@ -25,13 +26,13 @@ export class TaskImplemInterfaseService implements TaskInterfase {
 
     // Apply all conditions one by one (which are not empty)
     if (status != null) {
-      allTasks = allTasks.filter(task => task.completed === status);
+      allTasks = allTasks.filter(task => task.complited == status);
     }
     if (category != null) {
-      allTasks = allTasks.filter(task => task.category === category);
+      allTasks = allTasks.filter(task => task.category.title == category.title && task.category.id == category.id);
     }
     if (priority != null) {
-      allTasks = allTasks.filter(task => task.priority === priority);
+      allTasks = allTasks.filter(task => task.priority.title == priority.title && task.priority.id == priority.id);
     }
     if (searchText != null) {
       allTasks = allTasks.filter(
@@ -73,15 +74,12 @@ export class TaskImplemInterfaseService implements TaskInterfase {
   }
 
   add(task: Task): Observable<Task> {
-    if (task.id === null || task.id === 0) {
-      task.id = this.getLastIdTask();
-    }
-    this.dataService.tasks.push(task);
+    const completed = false;
+    const userId = parseInt(localStorage.getItem("userId"))
+    this.httpServise.postNewTask(task, completed, userId).subscribe(() => {
+      this.dataService.updateDataServiceTasks()
+    })
     return of(task);
-  }
-
-  private getLastIdTask(): number {
-    return Math.max.apply(Math, this.dataService.tasks.map(task => task.id)) + 1;
   }
 
   get(id: number): Observable<Task> {
@@ -101,6 +99,6 @@ export class TaskImplemInterfaseService implements TaskInterfase {
   }
 
   getAll(): Observable<Task[]> {
-    return of(this.dataService.tasks);
+    return this.dataService.tasks$;
   }
 }

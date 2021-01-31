@@ -6,3 +6,18 @@
   width: 700px;
 } */
 
+h1{
+  font-size: 1em;
+  margin: 0px 0px 5px;
+
+}
+.size{
+  font-size: 5px;
+}
+mat-icon{
+  font-size: 1em !important;
+}
+.size-button{
+width: 24px !important;
+height: 24px !important;
+}

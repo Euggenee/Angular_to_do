@@ -43,19 +43,51 @@ namespace to_do_list.Controllers
                     Title = t.Priority.Title,
                     Color = t.Priority.Color
                 },
-                Category =  new 
+                Category = new
                 {
-                    Id= t.Category.Id,
+                    Id = t.Category.Id,
                     Title = t.Category.Title,
+                    UserId = t.Category.UserId
                 },
                 UserId = t.UserId
-            }).Where(k => k.UserId == userId ).ToListAsync();
-            
+            }).Where(k => k.UserId == userId).ToListAsync();
+
             if (userId == null)
             {
                 return BadRequest();
             }
             return new ObjectResult(tasks);
+        }
+
+
+        // POST api/task
+        [HttpPost, Route("add")]
+        public async Task<ActionResult<Models.Task>> Post(Models.Task task)
+        {
+            var tempTask = new Models.Task
+            {
+                Title = task.Title,
+                Complited = task.Complited,
+                PriorityId = (from Priority in db.Priorities
+                                     where Priority.Id == task.Priority.Id
+                                     select Priority.Id).First(),
+                CategoryId = (from Category in db.Categories
+                                     where Category.Id == task.Category.Id
+                                     select Category.Id).First(),
+                Date = task.Date,
+                UserId = task.UserId
+            }; 
+
+            if (task == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                db.Tasks.Add((Models.Task)tempTask);
+            }
+            await db.SaveChangesAsync();
+            return Ok();
         }
     }
 }

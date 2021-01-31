@@ -24,7 +24,6 @@ export class CategoriesComponent implements OnInit {
 
   @Input()
   selectedCategory: Category;
-  private sc: Category;
 
   @Output()
   deleteCategory = new EventEmitter<Category>();

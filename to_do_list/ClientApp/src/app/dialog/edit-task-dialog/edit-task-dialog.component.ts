@@ -1,5 +1,5 @@
 import { Priority } from './../../model/priority';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Task } from "src/app/model/Task";
 import { DataHandlerService } from 'src/app/service/data-handler.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
@@ -12,7 +12,8 @@ import { OperType } from '../OperType';
 @Component({
   selector: 'app-edit-task-dialog',
   templateUrl: './edit-task-dialog.component.html',
-  styleUrls: ['./edit-task-dialog.component.css']
+  styleUrls: ['./edit-task-dialog.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
@@ -26,7 +27,8 @@ export class EditTaskDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<EditTaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: [Task, string, OperType],
     private dataHeandler: DataHandlerService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private changeDetectorRef: ChangeDetectorRef) {
   }
 
   public categories: Category[];
@@ -37,11 +39,14 @@ export class EditTaskDialogComponent implements OnInit {
   public operType: OperType; //Type of transaction
 
   public tmpTitle: string;
+  public tmpComplited: boolean;
   public tmpCategory: Category;
   public tmpPpriority: Priority;
   public tmpDate: Date;
 
+
   ngOnInit() {
+    console.log('this.dialogRef', this.dialogRef)
     this.task = this.data[0];
     this.dialogTitle = this.data[1];
     this.operType = this.data[2];
@@ -49,6 +54,7 @@ export class EditTaskDialogComponent implements OnInit {
     this.tmpCategory = this.task.category;
     this.tmpPpriority = this.task.priority;
     this.tmpDate = this.task.date;
+
 
     this.dataHeandler.getAllPriorities().subscribe(items => this.priorities = items);
     this.dataHeandler.getAllCategoryes().subscribe(items => this.categories = items);

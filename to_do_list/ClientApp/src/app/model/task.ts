@@ -3,18 +3,20 @@ import { Category } from "./category";
 
 
 export class Task {
-  id: number;
+  id?: number;
   title: string;
-  completed?: boolean;
+  complited?: boolean;
   priority?: Priority;
   category?: Category;
   date?: Date;
+  userId?: number
 
-  constructor(id: number, title: string, completed: boolean, priority: Priority, category: Category) {
-    id = this.id,
-      title = this.title,
-      completed = this.completed,
+  constructor(title: string, complited?: boolean, priority?: Priority, category?: Category, date?: Date, userId?: number) {
+    title = this.title,
+      complited = this.complited,
       priority = this.priority,
-      category = this.category
+      category = this.category,
+      date = this.date,
+      userId = this.userId
   }
 }

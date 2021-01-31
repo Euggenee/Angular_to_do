@@ -58,8 +58,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
     this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
-    this.dataHandler.getAllCategoryes().subscribe((categories) => { this.categories = categories; });
+    this.dataHandler.getAllCategoryes().subscribe(categories => this.categories = categories);
     this.onSelectCategory(null); // Show all tasks
   }
 
@@ -114,11 +115,7 @@ export class HomeComponent implements OnInit {
   }
 
   private updateTasks() {
-    this.dataHandler.searchTasks(
-      this.selectedCategory,
-      this.searchTaskText,
-      this.statusFilter,
-      this.priorityFilter
+    this.dataHandler.searchTasks(this.selectedCategory, this.searchTaskText, this.statusFilter, this.priorityFilter
     ).subscribe((tasks: Task[]) => {
       this.tasks = tasks;
     });

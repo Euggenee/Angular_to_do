@@ -50,7 +50,7 @@ export class PriorityImplemInterfaceService implements PriorityInterfase {
   }
 
   getAll(): Observable<Priority[]> {
-    return of(this.dataService.priorities);
+    return this.dataService.priorities$;
   }
 }
 

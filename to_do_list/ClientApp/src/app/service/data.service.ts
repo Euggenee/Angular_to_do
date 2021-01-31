@@ -21,7 +21,9 @@ export class DataService {
     public categories: Array<Category> = new Array;
     public categories$: BehaviorSubject<Category[]> = new BehaviorSubject(this.categories);
     public priorities: Array<Priority> = new Array;
+    public priorities$: BehaviorSubject<Priority[]> = new BehaviorSubject(this.priorities);
     public tasks: Array<Task> = new Array;
+    public tasks$: BehaviorSubject<Task[]> = new BehaviorSubject(this.tasks);
     public user: User = new User;
 
     // Update user data after authenticating
@@ -34,7 +36,8 @@ export class DataService {
     updateDataServiceTasks() {
         let userId = localStorage.getItem("userId");
         this.httpService.getUserTasks(userId).subscribe((data) => {
-            this.tasks = (<any>data).tasks;
+            this.tasks = (<any>data);
+            this.tasks$.next(this.tasks)
         }),
             (error) => { };
     }
@@ -43,6 +46,7 @@ export class DataService {
         let userId = localStorage.getItem("userId");
         this.httpService.getUserPriorities(userId).subscribe((data) => {
             this.priorities = (<any>data)
+            this.priorities$.next(this.priorities)
         }),
             (error) => { };
     }
@@ -50,7 +54,7 @@ export class DataService {
     updateDataServiceCategories() {
         let userId = localStorage.getItem("userId");
         this.httpService.getUserCategories(userId).subscribe((data) => {
-            this.categories = (<any>data).categories;
+            this.categories = (<any>data);
             this.categories$.next(this.categories)
             this.router.navigate(['/authetincated']);
             // Fix it! there is no place for routes
