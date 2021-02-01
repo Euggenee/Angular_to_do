@@ -37,8 +37,8 @@ export class DataHandlerService {
     return this.taskImplemInterfase.update(task);
   }
 
-  deleteTask(id: number): Observable<Task> {
-    return this.taskImplemInterfase.delete(id);
+  deleteTask(task: Task): Observable<Task> {
+    return this.taskImplemInterfase.delete(task.id);
   }
 
   addTask(task: Task): Observable<Task> {

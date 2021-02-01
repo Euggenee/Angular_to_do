@@ -86,10 +86,17 @@ export class TaskImplemInterfaseService implements TaskInterfase {
     return of(this.dataService.tasks.find(todo => todo.id === id));
   }
 
-  delete(id: number): Observable<Task> {
-    const taskTmp = this.dataService.tasks.find(t => t.id === id);     //удаляем по id
+  /*delete(id: number): Observable<Task> {
+    const taskTmp = this.dataService.tasks.find(t => t.id === id);                    //удаляем по id
     this.dataService.tasks.splice(this.dataService.tasks.indexOf(taskTmp), 1);
     return of(taskTmp);
+  }*/
+
+  delete(taskId): Observable<Task> {
+    this.httpServise.deleteTask(taskId).subscribe((response) => {
+      this.dataService.updateDataServiceTasks();
+    })
+    return of();
   }
 
   update(task: Task): Observable<Task> {

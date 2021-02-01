@@ -58,11 +58,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataService.updateUserData();
     this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
     this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
     this.dataHandler.getAllCategoryes().subscribe(categories => this.categories = categories);
-    this.onSelectCategory(null); // Show all tasks
   }
+
 
   // Change the category
   private onSelectCategory(category: Category) {
@@ -92,8 +93,7 @@ export class HomeComponent implements OnInit {
   }
 
   private onDeleteTask(task: Task) {
-    this.dataHandler.deleteTask(task.id).subscribe(cat => {
-      this.updateTasksAndStat()
+    this.dataHandler.deleteTask(task).subscribe(cat => {
     });
   }
 
@@ -124,7 +124,6 @@ export class HomeComponent implements OnInit {
   // Add a task
   private onAddTask(task: Task) {
     this.dataHandler.addTask(task).subscribe(result => {
-      this.updateTasksAndStat();
     });
   }
 
@@ -145,7 +144,6 @@ export class HomeComponent implements OnInit {
 
   // Shows tasks using all current conditions (category, search, filters, etc.)
   private updateTasksAndStat() {
-
     // Update the task list
     this.updateTasks();
     // Update variables for statistics

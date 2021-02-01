@@ -82,6 +82,11 @@ export class HttpService {
     return this.http.post(this.instans + "/task/add", body, { observe: 'response' })
   }
 
+  //Delete task
+  deleteTask(taskId) {
+    return this.http.delete(this.instans + "/task/" + taskId)
+  }
+
   //Getting user Priorities
   getUserPriorities(userId: string) {
     let params = new HttpParams()

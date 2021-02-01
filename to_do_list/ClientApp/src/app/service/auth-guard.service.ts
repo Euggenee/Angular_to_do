@@ -21,5 +21,4 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   canActivateChild(): boolean {
     return this.canActivate();
   }
-
 }

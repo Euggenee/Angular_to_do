@@ -121,5 +121,19 @@ namespace to_do_list.Controllers
             await db.SaveChangesAsync();
             return Ok(tempTask);
         }
+
+        // DELETE api/task/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<User>> Delete(int id)
+        {
+            Models.Task task = db.Tasks.FirstOrDefault(x => x.Id == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            db.Tasks.Remove(task);
+            await db.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

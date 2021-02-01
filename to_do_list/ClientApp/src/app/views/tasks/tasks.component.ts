@@ -170,7 +170,6 @@ export class TasksComponent implements OnInit {
         this.updateTask.emit(task);
         return;
       }
-
     });
   }
 
@@ -184,7 +183,6 @@ export class TasksComponent implements OnInit {
       },
       autoFocus: false
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {                                        // If you clicked OK
         this.deleteTask.emit(task);
