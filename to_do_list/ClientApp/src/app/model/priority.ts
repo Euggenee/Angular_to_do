@@ -2,11 +2,11 @@ export class Priority {
   id: number;
   title: string;
   color?: string;
+  userId?: number;
 
-  constructor(id: number, title: string, color: string) {
-
-    id = this.id,
-      title = this.title,
-      color = this.color
+  constructor(title: string, color?: string, userId?: number) {
+    this.title = title,
+      this.color = color,
+      this.userId = userId
   }
 }

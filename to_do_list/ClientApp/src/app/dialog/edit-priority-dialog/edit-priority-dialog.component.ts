@@ -49,15 +49,10 @@ export class EditPriorityDialogComponent implements OnInit {
       },
       autoFocus: false
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.dialogRef.close('delete'); // нажали удалить
       }
     });
   }
-
-  // private canDelete(): boolean {
-  //   return this.operType == OperType.EDIT;
-  // }
 }

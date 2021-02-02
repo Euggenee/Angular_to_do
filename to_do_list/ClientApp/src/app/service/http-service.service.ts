@@ -5,6 +5,7 @@ import { map, find, filter } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Category } from '../model/category';
 import { Task } from '../model/Task';
+import { Priority } from '../model/priority';
 
 @Injectable({
   providedIn: 'root'
@@ -98,6 +99,23 @@ export class HttpService {
           return priorities
         })
       );
+  }
+
+  //Delete Priority by id
+  deletePriority(userId: number) {
+    return this.http.delete(this.instans + "/priority/" + userId, { observe: 'response' })
+  }
+
+  //Chenges Priority
+  putPriority(priority: Priority) {
+    const body = { id: priority.id, title: priority.title, color: priority.color, userId: priority.userId }
+    return this.http.put(this.instans + "/priority/change", body, { observe: 'response' })
+  }
+
+  //Add new Priority
+  postNewPriority(priority: Priority) {
+    const body = { title: priority.title, userId: priority.userId }
+    return this.http.post(this.instans + "/priority/add", body, { observe: 'response' })
   }
 
   //Auth user

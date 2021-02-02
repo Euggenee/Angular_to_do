@@ -1,7 +1,7 @@
 import { ConfirmDialogComponent } from './../../dialog/confirm-dialog/confirm-dialog.component';
 import { Priority } from './../../model/priority';
 import { EditPriorityDialogComponent } from './../../dialog/edit-priority-dialog/edit-priority-dialog.component';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { EditCategoryDialogComponent } from '../../dialog/edit-category-dialog/edit-category-dialog.component';
 import { MatDialog } from '@angular/material';
 import { OperType } from 'src/app/dialog/OperType';
@@ -9,11 +9,12 @@ import { OperType } from 'src/app/dialog/OperType';
 @Component({
   selector: 'app-priorities',
   templateUrl: './priorities.component.html',
-  styleUrls: ['./priorities.component.css']
+  styleUrls: ['./priorities.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class PrioritiesComponent implements OnInit {
-
-  static defaultColor = '#fff';
+  static colorDrfault = '#fff'
 
   @Input()
   private priorities: [Priority];
@@ -54,8 +55,10 @@ export class PrioritiesComponent implements OnInit {
     const dialogRef = this.dialog.open(EditPriorityDialogComponent, { data: [" ", 'Добвление приоритета', OperType.ADD], width: '400px' })
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const newPriority = new Priority(null, result as string, PrioritiesComponent.defaultColor);
-        this.addPriority.emit(newPriority);
+        const title = result as string;
+        const userId = parseInt(localStorage.getItem("userId"));
+        const priority = new Priority(title, PrioritiesComponent.colorDrfault, userId)
+        this.addPriority.emit(priority);
       }
     })
   }
@@ -68,5 +71,6 @@ export class PrioritiesComponent implements OnInit {
       }
     })
   }
+
 }
 

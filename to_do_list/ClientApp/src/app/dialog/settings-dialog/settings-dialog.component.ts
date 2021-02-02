@@ -35,11 +35,15 @@ export class SettingsDialogComponent implements OnInit {
     this.dataHandler.addPriority(priority).subscribe();
   }
 
-  private onDeletePriority(priority) {
+  private onDeletePriority(priority: Priority) {
     this.dataHandler.deltePriority(priority).subscribe();
   }
 
-  private onUpdatePriority(priority) {
+  private onUpdatePriority(priority: Priority) {
     this.dataHandler.updatePrioriry(priority).subscribe();
+  }
+  private onUpdatePriorityColor(priority: Priority) {
+
+
   }
 }

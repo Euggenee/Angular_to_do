@@ -100,8 +100,8 @@ export class DataHandlerService {
     return this.priorityImplemInterfase.add(priority);
   }
 
-  deltePriority(id: number): Observable<Priority> {
-    return this.priorityImplemInterfase.delete(id);
+  deltePriority(priority): Observable<Priority> {
+    return this.priorityImplemInterfase.delete(priority.id);
   }
 
   updatePrioriry(priority: Priority): Observable<Priority> {

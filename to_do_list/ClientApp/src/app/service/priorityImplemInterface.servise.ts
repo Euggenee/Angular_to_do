@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { OnInit, Injectable } from '@angular/core';
 import { PriorityInterfase } from '../interface/priorityInterface';
+import { HttpService } from './http-service.service';
 
 
 @Injectable({
@@ -10,13 +11,12 @@ import { PriorityInterfase } from '../interface/priorityInterface';
 })
 export class PriorityImplemInterfaceService implements PriorityInterfase {
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private httpService: HttpService) { }
 
   add(priority: Priority): Observable<Priority> {
-    if (priority.id === null || priority.id === 0) {
-      priority.id = this.getLastIdPriority();
-    }
-    this.dataService.priorities.push(priority);
+    this.httpService.postNewPriority(priority).subscribe(() => {
+      this.dataService.updateDataServicePriorities()
+    })
     return of(priority);
   }
 
@@ -28,24 +28,18 @@ export class PriorityImplemInterfaceService implements PriorityInterfase {
     throw new Error("Method not implemented.");
   }
 
-  delete(id: number): Observable<Priority> {
-    // Before deleting - you need to nullify all references to the deleted value in tasks
-    // в реальной БД сама обновляет все ссылки (cascade update) исправить после написания бекенд
-    this.dataService.tasks.forEach(task => {
-      if (task.priority && task.priority.id === id) {
-        task.priority = null;
-      }
-    });
-    // Delete by id
-    const tmpPriority = this.dataService.priorities.find(t => t.id === id);
-    this.dataService.priorities.splice(this.dataService.priorities.indexOf(tmpPriority), 1);
-    return of(tmpPriority);
+  delete(userId: number): Observable<Priority> {
+    this.httpService.deletePriority(userId).subscribe(() => {
+      this.dataService.updateDataServicePriorities()
+    })
+    return of();
   }
 
-  // Update by id
   update(priority: Priority): Observable<Priority> {
-    const tmp = this.dataService.priorities.find(t => t.id === priority.id);
-    this.dataService.priorities.splice(this.dataService.priorities.indexOf(tmp), 1, priority);
+    this.httpService.putPriority(priority).subscribe(() => {
+      this.dataService.updateDataServicePriorities();
+      this.dataService.updateDataServiceTasks()
+    })
     return of(priority);
   }
 
@@ -54,10 +48,4 @@ export class PriorityImplemInterfaceService implements PriorityInterfase {
   }
 }
 
-
-// delete(id: number): Observable<Task> {
-//   const taskTmp = TestData.tasks.find(t => t.id === id);     //удаляем по id
-//   TestData.tasks.splice(TestData.tasks.indexOf(taskTmp), 1);
-//   return of(taskTmp);
-// }
 

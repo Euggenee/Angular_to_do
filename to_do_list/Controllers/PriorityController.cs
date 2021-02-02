@@ -27,7 +27,6 @@ namespace to_do_list.Controllers
 
         // GET: api/priority
         [HttpGet]
-        
         public async Task<ActionResult<IList<Priority>>> Get()
         {
             string userIdString = Request.Query.FirstOrDefault(u => u.Key == "userId").Value;
@@ -46,6 +45,52 @@ namespace to_do_list.Controllers
                 return BadRequest();
             }
             return new ObjectResult(priorities);
+        }
+
+        // POST: api/priority/add
+        [HttpPost, Route("add")]
+        public async Task<ActionResult<Priority>>Post(Priority priority) 
+        {
+            if (priority == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                db.Priorities.Add(priority);
+            }
+
+            await db.SaveChangesAsync();
+            return Ok(priority); 
+        }
+
+        //PUT:api/priority/change
+        [HttpPut, Route("change")]
+        public async Task<ActionResult<Priority>> Put(Priority priority)
+        {
+            if (priority == null)
+            {
+                return BadRequest();
+            }
+
+            db.Update(priority);
+            await db.SaveChangesAsync();
+            return Ok(priority);
+        }
+
+        //DELETE:api/priority
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Priority>> Delete(int id) 
+        {
+             Priority priority = db.Priorities.FirstOrDefault(x => x.Id == id);
+
+            if (priority == null)
+            {
+                return NotFound();
+            }
+            db.Priorities.Remove(priority);
+            await db.SaveChangesAsync();
+            return Ok(priority.Id);
         }
     }
 }

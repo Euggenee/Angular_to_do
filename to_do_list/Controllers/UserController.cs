@@ -112,7 +112,7 @@ namespace to_do_list.Controllers
             }
             db.Users.Remove(user);
             await db.SaveChangesAsync();
-            return Ok($"user.Id {user.Id}");
+            return Ok();
         }
     }
 }
