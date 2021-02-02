@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { Category } from '../model/category';
 import { Task } from '../model/Task';
 import { Priority } from '../model/priority';
+import { CategoriesComponent } from '../views/categories/categories.component';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ export class HttpService {
   private userParams = new HttpParams;
 
   constructor(private http: HttpClient) { }
+
+  //CATEGORY
 
   //Creating a new user
   postNewUser(user: User) {
@@ -33,72 +36,66 @@ export class HttpService {
   getUserCategories(userId: string) {
     let params = new HttpParams()
     params = params.append('userId', userId)
-    return this.http.get(this.instans + "/category", { params: params, observe: 'response' })
-      .pipe(
-        map((response) => {
-          const categories = response.body;
-          return categories
-        })
-      );
+    return this.http.get(this.instans + "/category", { params: params, observe: 'response' }).pipe(
+      map((response) => {
+        const categories = response.body;
+        return categories
+      })
+    );
+  }
+
+  //Chenges Category
+  putCategory(category: Category) {
+    const body = { id: category.id, title: category.title, userId: category.userId }
+    return this.http.put(this.instans + "/category/change", body, { observe: 'response' });
+  }
+
+  //Delete Category by id
+  deleteCategory(categoryId) {
+    return this.http.delete(this.instans + "/category/" + categoryId, { observe: 'response' });
   }
 
   //Getting user Tasks
   getUserTasks(userId: string) {
     let params = new HttpParams()
     params = params.append('userId', userId)
-    return this.http.get(this.instans + "/task", { params: params, observe: 'response' })
-      .pipe(
-        map((response) => {
-          const tasks = response.body;
-          return tasks
-        })
-      );
+    return this.http.get(this.instans + "/task", { params: params, observe: 'response' }).pipe(
+      map((response) => {
+        const tasks = response.body;
+        return tasks
+      })
+    );
   }
+
+  //TASK
 
   //Update task
   putUpdateTask(task: Task, userId: number) {
-    const body = {
-      id: task.id,
-      title: task.title,
-      complited: task.complited,
-      category: task.category,
-      priority: task.priority,
-      date: task.date,
-      userId
-    }
+    const body = { id: task.id, title: task.title, complited: task.complited, category: task.category, priority: task.priority, date: task.date, userId }
     return this.http.put(this.instans + "/task/change", body, { observe: "response" })
   }
 
-
   // Add new task
   postNewTask(task: Task, complited: boolean, userId: number) {
-    const body = {
-      title: task.title,
-      complited: complited,
-      priority: task.priority,
-      category: task.category,
-      date: task.date,
-      userId: userId
-    }
+    const body = { title: task.title, complited: complited, priority: task.priority, category: task.category, date: task.date, userId: userId }
     return this.http.post(this.instans + "/task/add", body, { observe: 'response' })
   }
 
   //Delete task
-  deleteTask(taskId) {
-    return this.http.delete(this.instans + "/task/" + taskId)
-  }
+  deleteTask(taskId) { return this.http.delete(this.instans + "/task/" + taskId) }
+
+  //PRIORITY
 
   //Getting user Priorities
   getUserPriorities(userId: string) {
     let params = new HttpParams()
     params = params.append('userId', userId)
-    return this.http.get(this.instans + "/priority", { params: params, observe: 'response' })
-      .pipe(
-        map((response) => {
-          const priorities = response.body;
-          return priorities
-        })
-      );
+    return this.http.get(this.instans + "/priority", { params: params, observe: 'response' }).pipe(
+      map((response) => {
+        const priorities = response.body;
+        return priorities
+      })
+    );
   }
 
   //Delete Priority by id
@@ -124,14 +121,14 @@ export class HttpService {
     return this.http.post(this.instans + "/auth/login", body, { observe: 'response' });
   }
 
+  //Get user by id
   getUserId(id: number): Observable<any> {
-    return this.http.get(this.instans + "/user/" + id, { observe: 'response' })
-      .pipe(
-        map((response) => {
-          const user = response.body;
-          return { user };
-        })
-      )
+    return this.http.get(this.instans + "/user/" + id, { observe: 'response' }).pipe(
+      map((response) => {
+        const user = response.body;
+        return { user };
+      })
+    )
   }
 }
 

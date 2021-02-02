@@ -50,18 +50,16 @@ namespace to_do_list.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> Get(int id)
         {
-            var category = await db.Categories.Select(c => new Category
+         var category = await db.Categories.Select(c => new Category
             {
                 Id = c.Id,
                 Title = c.Title
             }).Where(k => k.Id == id).ToListAsync();
-
             return new ObjectResult(category);
         }
 
         // POST api/category/add
         [HttpPost, Route("add")]
-        
         public async Task<ActionResult<Category>> Post(Category category)
         {
             if (category == null)
@@ -72,6 +70,50 @@ namespace to_do_list.Controllers
             {
              db.Categories.Add(category);
             }
+            await db.SaveChangesAsync();
+            return Ok(category);
+        }
+
+        // PUT api/category/change
+        [HttpPut, Route("change")]
+        public async Task<ActionResult<Category>> Put(Category category) 
+        {
+            var id = category.Id;
+            var userId = category.UserId;
+
+            if (id == null && userId == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                db.Update(category);
+            }
+            await db.SaveChangesAsync();
+            return Ok(category);
+        }
+
+        // DELETE api/category/id
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Category>> Delete(int id)
+        {
+            var category = (from cat in db.Categories
+                           where cat.Id == id
+                           select new Category
+                           {
+                               Id = cat.Id,
+                               Title = cat.Title,
+                               UserId = cat.UserId,
+                               Tasks = cat.Tasks
+                           }).First();
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+            
+            db.Categories.Remove(category);
+            db.Tasks.RemoveRange(category.Tasks);
             await db.SaveChangesAsync();
             return Ok(category);
         }

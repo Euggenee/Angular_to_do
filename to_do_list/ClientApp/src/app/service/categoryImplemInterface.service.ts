@@ -27,29 +27,23 @@ export class CategoryImplemInterfaceService implements CategoryInterfase {
     return of(category)
   }
 
-  // getLastIdCategory(): number {
-  //   return Math.max.apply(Math, this.dataService.categories.map(c => c.id)) + 1;
-  // }
-
   get(id: number): Observable<Category> {
     throw new Error("Method not implemented.");
   }
 
-  delete(id: number): Observable<Category> {
-    this.dataService.tasks.forEach(task => {
-      if (task.category && task.category.id === id) {
-        task.category = null;
-      }
-    });
-    const tmpCategory = this.dataService.categories.find(t => t.id === id);
-    this.dataService.categories.splice(this.dataService.categories.indexOf(tmpCategory), 1);
-    return of(tmpCategory);
+  delete(categoryId: number): Observable<Category> {
+    this.httpService.deleteCategory(categoryId).subscribe(() => {
+      this.dataService.updateDataServiceCategories()
+      this.dataService.updateDataServiceTasks()
+    })
+    return of();
   }
 
   update(category: Category): Observable<Category> {
-    const tmpCategory = this.dataService.categories.find(t => t.id === category.id);
-    this.dataService.categories.splice(this.dataService.categories.indexOf(tmpCategory), 1, category);
-    return of(tmpCategory);
+    this.httpService.putCategory(category).subscribe(() => {
+      this.dataService.updateDataServiceCategories();
+    })
+    return of(category);
   }
 
   getAll(): Observable<Category[]> {
