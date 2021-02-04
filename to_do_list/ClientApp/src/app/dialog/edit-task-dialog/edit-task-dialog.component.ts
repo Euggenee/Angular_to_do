@@ -1,12 +1,13 @@
 import { Priority } from './../../model/priority';
 import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Task } from "src/app/model/Task";
-import { DataHandlerService } from 'src/app/service/data-handler.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Category } from 'src/app/model/category';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { OperType } from '../OperType';
+import { PriorityService } from 'src/app/service/priority.servise';
+import { CategoryService } from 'src/app/service/category.service';
 
 
 @Component({
@@ -26,8 +27,9 @@ export class EditTaskDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<EditTaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: [Task, string, OperType],
-    private dataHeandler: DataHandlerService,
     private dialog: MatDialog,
+    private priorityService: PriorityService,
+    private categoryService: CategoryService,
     private changeDetectorRef: ChangeDetectorRef) {
   }
 
@@ -55,8 +57,8 @@ export class EditTaskDialogComponent implements OnInit {
     this.tmpDate = this.task.date;
 
 
-    this.dataHeandler.getAllPriorities().subscribe(items => this.priorities = items);
-    this.dataHeandler.getAllCategoryes().subscribe(items => this.categories = items);
+    this.priorityService.getAll().subscribe(items => this.priorities = items);
+    this.categoryService.getAll().subscribe(items => this.categories = items);
   }
 
   public onConfirm(): void {

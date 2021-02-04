@@ -1,5 +1,4 @@
 import { EditTaskDialogComponent } from './dialog/edit-task-dialog/edit-task-dialog.component';
-
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
@@ -9,15 +8,9 @@ import { MatTableModule } from "@angular/material/table";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
-
-import { DataHandlerService } from "./service/data-handler.service";
-
-
 import { CategoriesComponent } from "./views/categories/categories.component";
 import { TasksComponent } from "./views/tasks/tasks.component";
-
 import { MatDialogModule } from "@angular/material/dialog";
-
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
@@ -26,7 +19,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatOptionModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatCheckboxModule } from '@angular/material';
 import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 import { TaskDatePipe } from './pipe/task-date.pipe';
-
 import { registerLocaleData } from '@angular/common'
 import localeRu from '@angular/common/locales/ru';
 import { EditCategoryDialogComponent } from './dialog/edit-category-dialog/edit-category-dialog.component';
@@ -39,7 +31,6 @@ import { PrioritiesComponent } from './views/priorities/priorities.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { SettingsDialogComponent } from './dialog/settings-dialog/settings-dialog.component';
 import { EditPriorityDialogComponent } from './dialog/edit-priority-dialog/edit-priority-dialog.component';
-
 import { SingInComponent } from './dialog/sing-in/sing-in.component';
 import { RegisterComponent } from './dialog/register/register.component';
 import { HomeComponent } from './views/home/home.component';
@@ -52,9 +43,9 @@ import { UserApi } from './api/user-api';
 import { HttpService } from './service/http-service.service';
 import { JwtModule } from '@auth0/angular-jwt'
 import { DataService } from './service/data.service';
-import { TaskImplemInterfaseService } from './service/taskImplemInterface.service';
-import { PriorityImplemInterfaceService } from './service/priorityImplemInterface.servise';
-import { CategoryImplemInterfaceService } from './service/categoryImplemInterface.service';
+import { TaskService } from './service/task.service';
+import { PriorityService } from './service/priority.servise';
+import { CategoryService } from './service/category.service';
 import { AuthUserService } from './service/auth-user.service';
 
 
@@ -118,15 +109,14 @@ registerLocaleData(localeRu);
 
   providers: [
     HttpService,
-    DataHandlerService,
     AuthGuardService,
     AuthUserService,
     { provide: UserApi, useExisting: AuthUserService },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'auto' } },
     DataService,
-    TaskImplemInterfaseService,
-    PriorityImplemInterfaceService,
-    CategoryImplemInterfaceService
+    TaskService,
+    PriorityService,
+    CategoryService
 
   ],
   entryComponents: [

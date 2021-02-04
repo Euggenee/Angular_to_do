@@ -1,6 +1,5 @@
 import { Category } from 'src/app/model/category';
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { DataHandlerService } from '../../service/data-handler.service';
 import { MatDialog } from '@angular/material';
 import { EditCategoryDialogComponent } from 'src/app/dialog/edit-category-dialog/edit-category-dialog.component';
 import { OperType } from 'src/app/dialog/OperType';
@@ -42,7 +41,7 @@ export class CategoriesComponent implements OnInit {
 
   private searchCategoryTitle: string;
 
-  constructor(private dataHandler: DataHandlerService, private dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnChanges(): void {
     this.inCategories = this.categories

@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
-import { DataHandlerService } from '../../service/data-handler.service';
 import { Priority } from '../../model/Priority';
+import { PriorityService } from 'src/app/service/priority.servise';
 
 @Component({
   selector: 'app-settings-dialog',
@@ -19,11 +19,11 @@ export class SettingsDialogComponent implements OnInit {
   private priorities: Priority[];
 
   constructor(private dialogRef: MatDialogRef<SettingsDialogComponent>,
-    private dataHandler: DataHandlerService) {
+    private priorityService: PriorityService) {
   }
 
   ngOnInit() {
-    this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities)
+    this.priorityService.getAll().subscribe(priorities => this.priorities = priorities)
   }
 
   // Clik close
@@ -32,15 +32,15 @@ export class SettingsDialogComponent implements OnInit {
   }
 
   private onAddPriority(priority: Priority) {
-    this.dataHandler.addPriority(priority).subscribe();
+    this.priorityService.add(priority).subscribe();
   }
 
   private onDeletePriority(priority: Priority) {
-    this.dataHandler.deltePriority(priority).subscribe();
+    this.priorityService.delete(priority.id).subscribe();
   }
 
   private onUpdatePriority(priority: Priority) {
-    this.dataHandler.updatePrioriry(priority).subscribe();
+    this.priorityService.update(priority).subscribe();
   }
   private onUpdatePriorityColor(priority: Priority) {
 

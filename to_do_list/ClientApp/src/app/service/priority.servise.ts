@@ -2,14 +2,14 @@ import { Priority } from '../model/priority';
 import { Observable, of } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { OnInit, Injectable } from '@angular/core';
-import { PriorityInterfase } from '../interface/priorityInterface';
+import { IPriority } from '../interface/priority-interface';
 import { HttpService } from './http-service.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class PriorityImplemInterfaceService implements PriorityInterfase {
+export class PriorityService implements IPriority {
 
   constructor(private dataService: DataService, private httpService: HttpService) { }
 

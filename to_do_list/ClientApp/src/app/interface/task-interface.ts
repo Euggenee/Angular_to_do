@@ -1,5 +1,5 @@
 
-import { CommonInterface } from "./commonInterface";
+import { ICommon } from "./common-interface";
 import { Task } from "src/app/model/Task";
 import { Observable } from "rxjs";
 import { Priority } from 'src/app/model/priority';
@@ -7,7 +7,7 @@ import { OnInit } from '@angular/core';
 import { Category } from "../model/category";
 
 
-export interface TaskInterfase extends CommonInterface<Task> {
+export interface ITask extends ICommon<Task> {
 
 
 

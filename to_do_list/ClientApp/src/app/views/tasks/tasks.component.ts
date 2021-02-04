@@ -2,7 +2,6 @@ import { Category } from 'src/app/model/category';
 import { ConfirmDialogComponent } from './../../dialog/confirm-dialog/confirm-dialog.component';
 import { EditTaskDialogComponent } from './../../dialog/edit-task-dialog/edit-task-dialog.component';
 import { AfterViewInit, Component, OnInit, ViewChild, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { DataHandlerService } from "../../service/data-handler.service";
 import { Task } from "src/app/model/Task";
 import { MatTableDataSource } from "@angular/material";
 import { MatPaginator } from "@angular/material/paginator";
@@ -74,7 +73,6 @@ export class TasksComponent implements OnInit {
   private task: Task;
 
   constructor(
-    private dataHandler: DataHandlerService, // Data access
     private dialog: MatDialog, // Working with the dialog box
     private changeDetectorRef: ChangeDetectorRef
   ) {

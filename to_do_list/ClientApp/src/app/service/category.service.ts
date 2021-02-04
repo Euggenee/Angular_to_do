@@ -3,14 +3,14 @@ import { Category } from 'src/app/model/category';
 import { Observable, of } from 'rxjs';
 import { DataService } from 'src/app/service/data.service';
 import { Injectable, OnInit } from '@angular/core';
-import { CategoryInterfase } from '../interface/categoryInterface';
+import { ICategory } from '../interface/category-interface';
 import { HttpService } from './http-service.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoryImplemInterfaceService implements CategoryInterfase {
+export class CategoryService implements ICategory {
 
   constructor(private dataService: DataService, private httpService: HttpService) { }
 

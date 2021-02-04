@@ -2,10 +2,12 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from "@
 import { Task } from "src/app/model/Task";
 import { Category } from "src/app/model/category";
 import { Priority } from "src/app/model/priority";
-import { DataHandlerService } from "src/app/service/data-handler.service";
 import { zip } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { DataService } from "src/app/service/data.service";
+import { TaskService } from "src/app/service/task.service";
+import { PriorityService } from "src/app/service/priority.servise";
+import { CategoryService } from "src/app/service/category.service";
 
 @Component({
   selector: 'app-home',
@@ -40,9 +42,11 @@ export class HomeComponent implements OnInit {
   private searchCategoryText: string;
 
   constructor(
-    private dataHandler: DataHandlerService, // Facade for working with data
     private jwthelper: JwtHelperService,
     private dataService: DataService,
+    private taskService: TaskService,
+    private priorityService: PriorityService,
+    private categoryService: CategoryService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
   }
@@ -59,9 +63,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.updateUserData();
-    this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
-    this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
-    this.dataHandler.getAllCategoryes().subscribe(categories => this.categories = categories);
+    this.taskService.getAll().subscribe(tasks => this.tasks = tasks);
+    this.priorityService.getAll().subscribe(priorities => this.priorities = priorities);
+    this.categoryService.getAll().subscribe(categories => this.categories = categories);
   }
 
 
@@ -73,7 +77,7 @@ export class HomeComponent implements OnInit {
 
   // Remove category
   private onDeleteCategory(category: Category) {
-    this.dataHandler.deleteCategory(category.id).subscribe(cat => {
+    this.categoryService.delete(category.id).subscribe(cat => {
       this.selectedCategory = null;                                    // Открываем категорию "Все"
       this.onSearchCategory(null);
     });
@@ -81,19 +85,19 @@ export class HomeComponent implements OnInit {
 
   // Update category
   private onUpdateCategory(category: Category) {
-    this.dataHandler.updateCategory(category).subscribe(() => {
+    this.categoryService.update(category).subscribe(() => {
       this.onSearchCategory(this.searchCategoryText);
     });
   }
 
   private onUpdateTask(task: Task) {
-    this.dataHandler.updateTask(task).subscribe(cat => {
+    this.taskService.update(task).subscribe(cat => {
       this.updateTasksAndStat()
     });
   }
 
   private onDeleteTask(task: Task) {
-    this.dataHandler.deleteTask(task).subscribe(cat => {
+    this.taskService.delete(task.id).subscribe(cat => {
     });
   }
 
@@ -115,7 +119,7 @@ export class HomeComponent implements OnInit {
   }
 
   private updateTasks() {
-    this.dataHandler.searchTasks(this.selectedCategory, this.searchTaskText, this.statusFilter, this.priorityFilter
+    this.taskService.search(this.selectedCategory, this.searchTaskText, this.statusFilter, this.priorityFilter
     ).subscribe((tasks: Task[]) => {
       this.tasks = tasks;
     });
@@ -123,21 +127,23 @@ export class HomeComponent implements OnInit {
 
   // Add a task
   private onAddTask(task: Task) {
-    this.dataHandler.addTask(task).subscribe(result => {
+    this.taskService.add(task).subscribe(result => {
     });
   }
 
   private onAddCategory(title: string) {
-    this.dataHandler.addCategory(title).subscribe(() => this.updateCategories());
+    const userId = parseInt(localStorage.getItem("userId"))
+    const category = new Category(title, userId)
+    this.categoryService.add(category);
   }
 
   private updateCategories() {
-    this.dataHandler.getAllCategoryes().subscribe(categories => this.categories = categories)
+    this.categoryService.getAll().subscribe(categories => this.categories = categories)
   }
 
   private onSearchCategory(title: string) {
     this.searchCategoryText = title;
-    this.dataHandler.searchCategories(title).subscribe(categories => {
+    this.categoryService.search(title).subscribe(categories => {
       this.categories = categories;
     })
   }
@@ -153,10 +159,10 @@ export class HomeComponent implements OnInit {
   // Update statistics
   private updateStat() {
     zip(
-      this.dataHandler.getTotalCountInCategory(this.selectedCategory),
-      this.dataHandler.getCompletedCountInCategory(this.selectedCategory),
-      this.dataHandler.getUncompletedCountInCategory(this.selectedCategory),
-      this.dataHandler.getUncompletedTotalCount())
+      this.taskService.getTotalCountInCategory(this.selectedCategory),
+      this.taskService.getComplitedCountInCategory(this.selectedCategory),
+      this.taskService.getUncomplitedCountInCategory(this.selectedCategory),
+      this.taskService.getUncomplitedCountInCategory(null))
       .subscribe(array => {
         this.totalTasksCountInCategory = array[0];
         this.completedCountInCategory = array[1];

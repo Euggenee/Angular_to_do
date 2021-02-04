@@ -4,7 +4,7 @@ import { Category } from 'src/app/model/category';
 import { Priority } from 'src/app/model/priority';
 import { Observable, of } from 'rxjs';
 import { Injectable } from "@angular/core";
-import { TaskInterfase } from "../interface/taskInterface";
+import { ITask } from "../interface/task-interface";
 import { HttpService } from "./http-service.service";
 
 
@@ -12,7 +12,7 @@ import { HttpService } from "./http-service.service";
   providedIn: 'root'
 })
 
-export class TaskImplemInterfaseService implements TaskInterfase {
+export class TaskService implements ITask {
 
 
   constructor(private dataService: DataService, private httpServise: HttpService) { }

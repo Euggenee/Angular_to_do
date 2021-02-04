@@ -1,7 +1,7 @@
 import { Observable, BehaviorSubject } from "rxjs";
 
 
-export interface CommonInterface<T> {
+export interface ICommon<T> {
 
 
   add(T): Observable<T>;
