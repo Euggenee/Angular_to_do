@@ -5,6 +5,4 @@ import { Priority } from "src/app/model/priority";
 
 export interface IPriority extends ICommon<Priority> {
 
-
-
 }

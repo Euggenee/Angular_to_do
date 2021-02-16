@@ -8,6 +8,7 @@ import { DataService } from "src/app/service/data.service";
 import { TaskService } from "src/app/service/task.service";
 import { PriorityService } from "src/app/service/priority.servise";
 import { CategoryService } from "src/app/service/category.service";
+import { List, fromJS } from "immutable";
 
 @Component({
   selector: 'app-home',
@@ -67,7 +68,6 @@ export class HomeComponent implements OnInit {
     this.priorityService.getAll().subscribe(priorities => this.priorities = priorities);
     this.categoryService.getAll().subscribe(categories => this.categories = categories);
   }
-
 
   // Change the category
   private onSelectCategory(category: Category) {

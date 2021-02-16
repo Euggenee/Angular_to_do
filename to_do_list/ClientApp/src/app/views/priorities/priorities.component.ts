@@ -71,6 +71,5 @@ export class PrioritiesComponent implements OnInit {
       }
     })
   }
-
 }
 

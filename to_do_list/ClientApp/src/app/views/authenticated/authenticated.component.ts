@@ -11,5 +11,4 @@ export class AuthenticatedComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

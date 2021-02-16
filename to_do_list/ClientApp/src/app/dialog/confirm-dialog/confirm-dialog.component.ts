@@ -29,5 +29,4 @@ export class ConfirmDialogComponent implements OnInit {
   public onCansel(): void {
     this.dialogRef.close(false);
   }
-
 }

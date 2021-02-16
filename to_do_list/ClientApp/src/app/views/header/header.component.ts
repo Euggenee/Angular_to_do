@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-// import { SettingsDialogComponent } from "../../dialog/settings-dialog/settings-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { SettingsDialogComponent } from 'src/app/dialog/settings-dialog/settings-dialog.component';
 import { UserApi } from 'src/app/api/user-api';
@@ -42,8 +41,5 @@ export class HeaderComponent implements OnInit {
   // User exit from the application implemented in auth-user.service
   private onSinOut() {
     this.userApi.signOut();
-
   }
-
-
 }

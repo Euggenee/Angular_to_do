@@ -4,7 +4,6 @@ import { MatDialog } from '@angular/material';
 import { EditCategoryDialogComponent } from 'src/app/dialog/edit-category-dialog/edit-category-dialog.component';
 import { OperType } from 'src/app/dialog/OperType';
 
-
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',

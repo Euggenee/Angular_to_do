@@ -9,14 +9,12 @@ import { OperType } from '../OperType';
 import { PriorityService } from 'src/app/service/priority.servise';
 import { CategoryService } from 'src/app/service/category.service';
 
-
 @Component({
   selector: 'app-edit-task-dialog',
   templateUrl: './edit-task-dialog.component.html',
   styleUrls: ['./edit-task-dialog.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 
 export class EditTaskDialogComponent implements OnInit {
 

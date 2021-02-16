@@ -10,7 +10,6 @@ import { User } from 'src/app/model/user';
 export interface ICategory extends ICommon<Category> {
 
   search(title: string): Observable<Category[]>;
-
 }
 
 

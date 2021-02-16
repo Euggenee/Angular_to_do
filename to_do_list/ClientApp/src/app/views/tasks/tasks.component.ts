@@ -78,17 +78,12 @@ export class TasksComponent implements OnInit {
   ) {
   }
 
-
   ngOnInit() {
-
-    //this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
-
     // Datasource must be created for the table, any source (database, arrays, JSON, etc.) is assigned to it
     this.dataSource = new MatTableDataSource();
     this.fillTable();                           // Fill tables with data (tasks) and all metadata
     this.onSelectCategory(null);
   }
-
 
   // Depending on the status of the task, return the color of the title
   private getPriorityColor(task: Task): string {
@@ -113,7 +108,6 @@ export class TasksComponent implements OnInit {
     // Update the data source (since the data of the tasks array has been updated)
     this.dataSource.data = this.tasks;
     this.addTableObjects();
-
 
     // When we receive new data ..
     // So that you can sort by the "category" and "priority" columns, because there are not primitive types, but objects
@@ -231,9 +225,7 @@ export class TasksComponent implements OnInit {
         this.addTask.emit(this.task);
       }
     });
-
   }
-
 }
 
 

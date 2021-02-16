@@ -7,7 +7,6 @@ import { HttpService } from 'src/app/service/http-service.service';
 import { Observable, throwError, pipe } from 'rxjs';
 import { catchError, retry, delay } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -54,7 +53,6 @@ export class RegisterComponent implements OnInit {
             this.registering = false;
           }
           this.submitting = false;
-          //this.formError = error.massege;
         }
       );
     };

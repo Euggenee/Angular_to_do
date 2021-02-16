@@ -3,7 +3,6 @@ import { Observable, BehaviorSubject } from "rxjs";
 
 export interface ICommon<T> {
 
-
   add(T): Observable<T>;
 
   get(id: number): Observable<T>;
@@ -13,6 +12,5 @@ export interface ICommon<T> {
   update(T): Observable<T>;
 
   getAll(): Observable<T[]>;
-
 
 }
