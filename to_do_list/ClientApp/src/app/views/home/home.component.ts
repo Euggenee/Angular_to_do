@@ -20,27 +20,33 @@ import { List, fromJS } from "immutable";
 
 export class HomeComponent implements OnInit {
 
-  private title = 'Todo';
-  private tasks: Task[];
-  private categories: Array<Category> = new Array // All categories
-  private priorities: Array<Priority> = new Array // All priorities
+  title = 'Todo';
+  tasks: Task[];
+  categories: Array<Category> = new Array // All categories
+  priorities: Array<Priority> = new Array // All priorities
 
   // Statistics
-  private totalTasksCountInCategory: number;
-  private completedCountInCategory: number;
-  private uncompletedCountInCategory: number;
-  private uncompletedTotalTasksCount: number;
-  private showStat = false;
+  totalTasksCountInCategory: number;
+  completedCountInCategory: number;
+  uncompletedCountInCategory: number;
+  uncompletedTotalTasksCount: number;
+  showStat = false;
 
-  private selectedCategory: Category = null;
+  selectedCategory: Category = null;
 
   // Search
-  private searchTaskText = ''; // Current value for searching tasks
+  searchTaskText = ''; // Current value for searching tasks
 
   // Filtering
-  private priorityFilter: Priority;
-  private statusFilter: boolean;
-  private searchCategoryText: string;
+  priorityFilter: Priority;
+  statusFilter: boolean;
+  searchCategoryText: string;
+
+  //Menu
+  menuOpened: boolean; // open close
+  menuMode: string; // type of extension (overhead, pushing, etc.)
+  menuPosition: string; // side
+  showBackdrop: boolean; // show background dimming or not
 
   constructor(
     private jwthelper: JwtHelperService,
@@ -50,6 +56,7 @@ export class HomeComponent implements OnInit {
     private categoryService: CategoryService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
+    this.setMenuValues(); // set menu settings
   }
 
   isUserAuthenticated() {
@@ -101,7 +108,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  // Поиск задач
+  // Search for tasks
   private onSearchTasks(searchString: string) {
     this.searchTaskText = searchString;
     this.updateTasks();
@@ -167,12 +174,30 @@ export class HomeComponent implements OnInit {
         this.totalTasksCountInCategory = array[0];
         this.completedCountInCategory = array[1];
         this.uncompletedCountInCategory = array[2];
-        this.uncompletedTotalTasksCount = array[3]; // Нужно для категории Все
+        this.uncompletedTotalTasksCount = array[3]; // Needed for the All category
       });
   }
 
   // Show hide statistics
   private toggleStat(showStat: boolean) {
     this.showStat = showStat;
+  }
+
+  // If you closed the menu in any way - set the value to false
+  private onClosedMenu() {
+    this.menuOpened = false;
+  }
+
+  // Menu options
+  private setMenuValues() {
+    this.menuPosition = 'left'; // location to the left
+    this.menuOpened = true;     // the menu will open immediately by default
+    this.menuMode = 'push';     // will "push" the main content, not close it
+    this.showBackdrop = false;  // show dark background or not (need more for mobile version)
+  }
+
+  // Show-hide menu
+  private toggleMenu() {
+    this.menuOpened = !this.menuOpened;
   }
 }

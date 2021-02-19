@@ -47,6 +47,7 @@ import { TaskService } from './service/task.service';
 import { PriorityService } from './service/priority.servise';
 import { CategoryService } from './service/category.service';
 import { AuthUserService } from './service/auth-user.service';
+import { SidebarModule } from 'ng-sidebar';
 
 
 export function tokenGetter() {
@@ -76,7 +77,6 @@ registerLocaleData(localeRu);
     RegisterComponent,
     HomeComponent,
     AuthenticatedComponent,
-
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -98,6 +98,7 @@ registerLocaleData(localeRu);
     MatNativeDateModule,
     MatCheckboxModule,
     ColorPickerModule,
+    SidebarModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

@@ -20,6 +20,9 @@ export class HeaderComponent implements OnInit {
   @Output()
   toggleStat = new EventEmitter<boolean>(); // Show / hide statistics
 
+  @Output()
+  toggleMenu = new EventEmitter<boolean>()     //Show / hide menu categories
+
   constructor(private dialog: MatDialog, private userApi: UserApi) { }
 
   ngOnInit() { }
@@ -41,5 +44,9 @@ export class HeaderComponent implements OnInit {
   // User exit from the application implemented in auth-user.service
   private onSinOut() {
     this.userApi.signOut();
+  }
+
+  private onToggleMenu() {
+    this.toggleMenu.emit()
   }
 }
