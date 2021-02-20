@@ -5,20 +5,20 @@
         <mat-icon>menu</mat-icon>
       </button>
       <p class="navbar-brand">{{categoryName}}</p>
-      <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="showStat">Скрыть статистику</p>
-      <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="!showStat">Показать статистику </p>
+      <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="showStat && !isMobiole">Скрыть статистику</p>
+      <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="!showStat && !isMobiole">Показать статистику </p>
     </div>
 
     <!--help, settings-->
 
     <div class="col-2 text-right align-self-top indent ">
-      <button mat-icon-button class="header-icon" (click)="onSinOut()">
+      <button *ngIf="!isMobiole" mat-icon-button class="header-icon" (click)="onSinOut()">
         <mat-icon class="prompt" data-title="Выход">face</mat-icon>
       </button>
       <button mat-icon-button (click)="showSettings()" class="header-icon">
         <mat-icon>settings</mat-icon>
       </button>
-      <button mat-icon-button class="header-icon">
+      <button *ngIf="!isMobiole" mat-icon-button class="header-icon">
         <mat-icon>help</mat-icon>
       </button>
     </div>

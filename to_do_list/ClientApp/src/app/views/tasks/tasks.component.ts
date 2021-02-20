@@ -9,6 +9,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatDialog } from "@angular/material/dialog";
 import { Priority } from 'src/app/model/priority';
 import { OperType } from 'src/app/dialog/OperType';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-tasks',
@@ -72,10 +73,16 @@ export class TasksComponent implements OnInit {
   private tasks: Task[];
   private task: Task;
 
+  isMobile: boolean;
+  isTablet: boolean;
+
   constructor(
     private dialog: MatDialog, // Working with the dialog box
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private deviceService: DeviceDetectorService
   ) {
+    this.isMobile = deviceService.isMobile();
+    this.isTablet = deviceService.isTablet();
   }
 
   ngOnInit() {
@@ -225,6 +232,14 @@ export class TasksComponent implements OnInit {
         this.addTask.emit(this.task);
       }
     });
+  }
+
+  // depending on the task status - return the background color
+  private getMobilePriorityBgColor(task: Task) {
+    if (task.priority != null && !task.complited) {
+      return task.priority.color;
+    }
+    return 'none';
   }
 }
 

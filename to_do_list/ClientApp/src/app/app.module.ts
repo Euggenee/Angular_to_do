@@ -48,6 +48,9 @@ import { PriorityService } from './service/priority.servise';
 import { CategoryService } from './service/category.service';
 import { AuthUserService } from './service/auth-user.service';
 import { SidebarModule } from 'ng-sidebar';
+import { DeviceDetectorService } from 'ngx-device-detector';
+
+
 
 
 export function tokenGetter() {
@@ -117,8 +120,8 @@ registerLocaleData(localeRu);
     DataService,
     TaskService,
     PriorityService,
-    CategoryService
-
+    CategoryService,
+    DeviceDetectorService
   ],
   entryComponents: [
     EditTaskDialogComponent,

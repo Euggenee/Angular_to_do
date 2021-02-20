@@ -8,6 +8,7 @@ import { DataService } from "src/app/service/data.service";
 import { TaskService } from "src/app/service/task.service";
 import { PriorityService } from "src/app/service/priority.servise";
 import { CategoryService } from "src/app/service/category.service";
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { List, fromJS } from "immutable";
 
 @Component({
@@ -42,11 +43,15 @@ export class HomeComponent implements OnInit {
   statusFilter: boolean;
   searchCategoryText: string;
 
-  //Menu
+  // Menu
   menuOpened: boolean; // open close
   menuMode: string; // type of extension (overhead, pushing, etc.)
   menuPosition: string; // side
   showBackdrop: boolean; // show background dimming or not
+
+  // Type device
+  isMobile: boolean;
+  isTablet: boolean;
 
   constructor(
     private jwthelper: JwtHelperService,
@@ -54,9 +59,17 @@ export class HomeComponent implements OnInit {
     private taskService: TaskService,
     private priorityService: PriorityService,
     private categoryService: CategoryService,
+    private deviceService: DeviceDetectorService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
-    this.setMenuValues(); // set menu settings
+
+
+    // define the type of request
+    this.isMobile = deviceService.isMobile();
+    this.isTablet = deviceService.isTablet();
+    this.showStat = true ? !this.isMobile : false; // if mob. device, then by default do not show statistics
+    // set menu settings
+    this.setMenuValues();
   }
 
   isUserAuthenticated() {
@@ -190,10 +203,17 @@ export class HomeComponent implements OnInit {
 
   // Menu options
   private setMenuValues() {
-    this.menuPosition = 'left'; // location to the left
-    this.menuOpened = true;     // the menu will open immediately by default
-    this.menuMode = 'push';     // will "push" the main content, not close it
-    this.showBackdrop = false;  // show dark background or not (need more for mobile version)
+    this.menuPosition = 'left'; // left menu
+    // side menu settings for mob. and desktop options
+    if (this.isMobile) {
+      this.menuOpened = false; // on mob. by default the menu will be closed
+      this.menuMode = 'over'; // on top of all content
+      this.showBackdrop = true; // show dark background or not (needed for mobile version)
+    } else {
+      this.menuOpened = true; // NOT in mob. the default version will open the menu (because there is enough space)
+      this.menuMode = 'push'; // will "push" the main content, not close it
+      this.showBackdrop = false; // show dark background or not
+    }
   }
 
   // Show-hide menu

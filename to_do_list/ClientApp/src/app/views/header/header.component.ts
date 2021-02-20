@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { SettingsDialogComponent } from 'src/app/dialog/settings-dialog/settings-dialog.component';
 import { UserApi } from 'src/app/api/user-api';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit {
   categoryName: string;
 
   @Input()
-  private showStat: boolean;
+  showStat: boolean;
 
   @Output()
   toggleStat = new EventEmitter<boolean>(); // Show / hide statistics
@@ -23,7 +24,11 @@ export class HeaderComponent implements OnInit {
   @Output()
   toggleMenu = new EventEmitter<boolean>()     //Show / hide menu categories
 
-  constructor(private dialog: MatDialog, private userApi: UserApi) { }
+  private isMobiole: boolean;
+
+  constructor(private dialog: MatDialog, private userApi: UserApi, private deviceDetector: DeviceDetectorService) {
+    this.isMobiole = deviceDetector.isMobile();
+  }
 
   ngOnInit() { }
 

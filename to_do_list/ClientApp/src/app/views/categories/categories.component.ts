@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 import { MatDialog } from '@angular/material';
 import { EditCategoryDialogComponent } from 'src/app/dialog/edit-category-dialog/edit-category-dialog.component';
 import { OperType } from 'src/app/dialog/OperType';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-categories',
@@ -37,10 +38,16 @@ export class CategoriesComponent implements OnInit {
 
   indexMouseMove: number;
 
+  isMobile: boolean;
+  isTablet: boolean;
+
 
   private searchCategoryTitle: string;
 
-  constructor(private dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef, private deviceService: DeviceDetectorService) {
+    this.isMobile = deviceService.isMobile();
+    this.isTablet = deviceService.isTablet();
+  }
 
   ngOnChanges(): void {
     this.inCategories = this.categories
