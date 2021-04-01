@@ -96,7 +96,7 @@ export class TaskService implements ITask {
   update(task: Task): Observable<Task> {
     const userId = parseInt(localStorage.getItem("userId"))
     this.httpServise.putUpdateTask(task, userId).subscribe(() => {
-      this.dataService.updateDataServiceTasks();
+      //this.dataService.updateDataServiceTasks();
     })
     return of(task);
   }

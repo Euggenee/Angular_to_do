@@ -119,6 +119,13 @@ export class HomeComponent implements OnInit {
   private onDeleteTask(task: Task) {
     this.taskService.delete(task.id).subscribe(cat => {
     });
+    if (this.selectedCategory != null) {
+      this.selectedCategory = task.category
+      this.updateTasksAndStat()
+    }
+    else {
+      this.updateTasksAndStat()
+    }
   }
 
   // Search for tasks

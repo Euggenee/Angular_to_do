@@ -28,8 +28,8 @@ export class PriorityService implements IPriority {
     throw new Error("Method not implemented.");
   }
 
-  delete(userId: number): Observable<Priority> {
-    this.httpService.deletePriority(userId).subscribe(() => {
+  delete(priorityId): Observable<Priority> {
+    this.httpService.deletePriority(priorityId).subscribe(() => {
       this.dataService.updateDataServicePriorities()
     })
     return of();
